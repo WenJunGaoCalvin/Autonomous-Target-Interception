@@ -1,0 +1,631 @@
+[  0%] Built target trajectory_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[  0%] Built target tf2_msgs_generate_messages_lisp
+[  0%] Built target visualization_msgs_generate_messages_lisp
+[  0%] Built target visualization_msgs_generate_messages_py
+[  0%] Built target visualization_msgs_generate_messages_nodejs
+[  0%] Built target tf_generate_messages_nodejs
+[  0%] Built target tf_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_lisp
+[  0%] Built target tf2_msgs_generate_messages_nodejs
+[  0%] Built target tf2_msgs_generate_messages_cpp
+[  0%] Built target actionlib_generate_messages_nodejs
+[  5%] Built target servo_state_publisher
+[  5%] Built target trajectory_msgs_generate_messages_eus
+[  5%] Built target actionlib_generate_messages_cpp
+[  5%] Built target roscpp_generate_messages_py
+[  5%] Built target actionlib_generate_messages_py
+[  5%] Built target rosgraph_msgs_generate_messages_lisp
+[  5%] Built target actionlib_msgs_generate_messages_eus
+[  5%] Built target visualization_msgs_generate_messages_eus
+[  5%] Built target nav_msgs_generate_messages_cpp
+[  5%] Built target tf_generate_messages_eus
+[  5%] Built target geometry_msgs_generate_messages_eus
+[  5%] Built target std_msgs_generate_messages_nodejs
+[  5%] Built target diagnostic_msgs_generate_messages_lisp
+[  5%] Built target std_msgs_generate_messages_cpp
+[  5%] Built target nav_msgs_generate_messages_eus
+[  5%] Built target std_msgs_generate_messages_py
+[  5%] Built target geometry_msgs_generate_messages_py
+[  5%] Built target diagnostic_msgs_generate_messages_eus
+[  5%] Built target roscpp_generate_messages_cpp
+[  5%] Built target tf2_msgs_generate_messages_eus
+[  5%] Built target mavros_msgs_generate_messages_eus
+[  5%] Built target diagnostic_msgs_generate_messages_cpp
+[  5%] Built target nav_msgs_generate_messages_py
+[  5%] Built target sensor_msgs_generate_messages_py
+[  5%] Built target actionlib_generate_messages_lisp
+[  5%] Built target tf_generate_messages_lisp
+[  5%] Built target roscpp_generate_messages_lisp
+[  5%] Built target rosgraph_msgs_generate_messages_py
+[  5%] Built target geometry_msgs_generate_messages_cpp
+[  5%] Built target diagnostic_msgs_generate_messages_nodejs
+[  5%] Built target trajectory_msgs_generate_messages_py
+[  5%] Built target rosgraph_msgs_generate_messages_cpp
+[  5%] Built target geometry_msgs_generate_messages_nodejs
+[  5%] Built target uuid_msgs_generate_messages_lisp
+[  5%] Built target uuid_msgs_generate_messages_eus
+[  5%] Built target geometry_msgs_generate_messages_lisp
+[  5%] Built target mavros_msgs_generate_messages_py
+[  5%] Built target roscpp_generate_messages_eus
+[  5%] Built target std_msgs_generate_messages_lisp
+[  5%] Built target uuid_msgs_generate_messages_cpp
+[  5%] Built target actionlib_generate_messages_eus
+[  5%] Built target roscpp_generate_messages_nodejs
+[  5%] Built target rosgraph_msgs_generate_messages_nodejs
+[  5%] Built target geographic_msgs_generate_messages_eus
+[  5%] Built target nav_msgs_generate_messages_nodejs
+[  5%] Built target rosgraph_msgs_generate_messages_eus
+[  5%] Built target geographic_msgs_generate_messages_cpp
+[  5%] Built target diagnostic_msgs_generate_messages_py
+[  5%] Built target geographic_msgs_generate_messages_nodejs
+[  5%] Built target sensor_msgs_generate_messages_cpp
+[  5%] Built target geographic_msgs_generate_messages_lisp
+[  5%] Built target geographic_msgs_generate_messages_py
+[  5%] Built target sensor_msgs_generate_messages_eus
+[  5%] Built target visualization_msgs_generate_messages_cpp
+[  5%] Built target sensor_msgs_generate_messages_lisp
+[  5%] Built target uuid_msgs_generate_messages_nodejs
+[  5%] Built target uuid_msgs_generate_messages_py
+[  5%] Built target tf2_msgs_generate_messages_py
+[  5%] Built target nav_msgs_generate_messages_lisp
+[  5%] Built target mavros_msgs_generate_messages_cpp
+[  5%] Built target mavros_msgs_generate_messages_lisp
+[  5%] Built target sensor_msgs_generate_messages_nodejs
+[  5%] Built target actionlib_msgs_generate_messages_py
+[  5%] Built target mavros_msgs_generate_messages_nodejs
+[  5%] Built target actionlib_msgs_generate_messages_cpp
+[  5%] Built target tf_generate_messages_py
+[  5%] Built target actionlib_msgs_generate_messages_lisp
+[  5%] Built target std_msgs_generate_messages_eus
+[ 10%] Built target visualization
+[35m[1mScanning dependencies of target mavros_extras[0m
+[ 13%] [32mBuilding CXX object CMakeFiles/mavros_extras.dir/src/plugins/gimbal_control.cpp.o[0m
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:67:1: error: expected class-name before ‘{’ token
+   67 | {
+      | ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:69:46: error: expected ‘)’ before ‘uas_’
+   69 |   explicit GimbalControlPlugin(plugin::UASPtr uas_)
+      |                               ~              ^~~~~
+      |                                              )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:188:3: error: ‘Subscriptions’ does not name a type
+  188 |   Subscriptions get_subscriptions() override
+      |   ^~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:200:3: error: ‘rclcpp’ does not name a type
+  200 |   rclcpp::CallbackGroup::SharedPtr cb_group;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:202:3: error: ‘rclcpp’ does not name a type
+  202 |   rclcpp::Subscription<mavros_msgs::msg::GimbalDeviceSetAttitude>::SharedPtr set_device_attitude_sub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:203:3: error: ‘rclcpp’ does not name a type
+  203 |   rclcpp::Subscription<mavros_msgs::msg::GimbalManagerSetAttitude>::SharedPtr set_manager_attitude_sub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:204:3: error: ‘rclcpp’ does not name a type
+  204 |   rclcpp::Subscription<mavros_msgs::msg::GimbalManagerSetPitchyaw>::SharedPtr set_manager_pitchyaw_sub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:205:3: error: ‘rclcpp’ does not name a type
+  205 |   rclcpp::Subscription<mavros_msgs::msg::GimbalManagerSetPitchyaw>::SharedPtr set_manager_manual_control_sub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:208:3: error: ‘rclcpp’ does not name a type
+  208 |   rclcpp::Publisher<mavros_msgs::msg::GimbalDeviceAttitudeStatus>::SharedPtr gimbal_attitude_status_pub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:209:3: error: ‘rclcpp’ does not name a type
+  209 |   rclcpp::Publisher<mavros_msgs::msg::GimbalManagerStatus>::SharedPtr gimbal_manager_status_pub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:210:3: error: ‘rclcpp’ does not name a type
+  210 |   rclcpp::Publisher<mavros_msgs::msg::GimbalManagerInformation>::SharedPtr gimbal_manager_info_pub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:211:3: error: ‘rclcpp’ does not name a type
+  211 |   rclcpp::Publisher<mavros_msgs::msg::GimbalDeviceInformation>::SharedPtr gimbal_device_info_pub;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:214:3: error: ‘rclcpp’ does not name a type
+  214 |   rclcpp::Service<mavros_msgs::srv::GimbalGetInformation>::SharedPtr gimbal_device_info_srv;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:215:3: error: ‘rclcpp’ does not name a type
+  215 |   rclcpp::Service<mavros_msgs::srv::GimbalGetInformation>::SharedPtr gimbal_manager_info_srv;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:216:3: error: ‘rclcpp’ does not name a type
+  216 |   rclcpp::Service<mavros_msgs::srv::GimbalManagerConfigure>::SharedPtr gimbal_manager_configure_srv;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:217:3: error: ‘rclcpp’ does not name a type
+  217 |   rclcpp::Service<mavros_msgs::srv::GimbalManagerPitchyaw>::SharedPtr gimbal_manager_pitchyaw_srv;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:218:3: error: ‘rclcpp’ does not name a type
+  218 |   rclcpp::Service<mavros_msgs::srv::GimbalManagerSetRoi>::SharedPtr gimbal_manager_set_roi_srv;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:219:3: error: ‘rclcpp’ does not name a type
+  219 |   rclcpp::Service<mavros_msgs::srv::GimbalManagerCameraTrack>::SharedPtr gimbal_manager_camera_track;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:222:3: error: ‘rclcpp’ does not name a type
+  222 |   rclcpp::Client<mavros_msgs::srv::CommandLong>::SharedPtr cmdClient;
+      |   ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:229:32: error: ‘mavros_msgs::msg’ has not been declared
+  229 |   void publish_tf(mavros_msgs::msg::GimbalDeviceAttitudeStatus & gimbal_attitude_msg)
+      |                                ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:229:64: error: expected ‘,’ or ‘...’ before ‘&’ token
+  229 |   void publish_tf(mavros_msgs::msg::GimbalDeviceAttitudeStatus & gimbal_attitude_msg)
+      |                                                                ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:253:13: error: ‘mavros::plugin::filter’ has not been declared
+  253 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |             ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:253:33: error: expected ‘,’ or ‘...’ before ‘filter’
+  253 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |                                 ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:287:13: error: ‘mavros::plugin::filter’ has not been declared
+  287 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |             ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:287:33: error: expected ‘,’ or ‘...’ before ‘filter’
+  287 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |                                 ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:325:13: error: ‘mavros::plugin::filter’ has not been declared
+  325 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |             ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:325:33: error: expected ‘,’ or ‘...’ before ‘filter’
+  325 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |                                 ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:357:13: error: ‘mavros::plugin::filter’ has not been declared
+  357 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |             ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:357:33: error: expected ‘,’ or ‘...’ before ‘filter’
+  357 |     plugin::filter::SystemAndOk filter [[maybe_unused]])
+      |                                 ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:380:50: error: ‘msg’ in namespace ‘mavros_msgs’ does not name a type
+  380 |   void device_set_attitude_cb(const mavros_msgs::msg::GimbalDeviceSetAttitude::SharedPtr req)
+      |                                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:380:78: error: expected unqualified-id before ‘::’ token
+  380 |   void device_set_attitude_cb(const mavros_msgs::msg::GimbalDeviceSetAttitude::SharedPtr req)
+      |                                                                              ^~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:380:78: error: expected ‘)’ before ‘::’ token
+  380 |   void device_set_attitude_cb(const mavros_msgs::msg::GimbalDeviceSetAttitude::SharedPtr req)
+      |                              ~                                               ^~
+      |                                                                              )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:380:55: error: expected ‘;’ at end of member declaration
+  380 |   void device_set_attitude_cb(const mavros_msgs::msg::GimbalDeviceSetAttitude::SharedPtr req)
+      |                                                       ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                              ;
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:380:80: error: ‘SharedPtr’ in namespace ‘::’ does not name a type
+  380 |   void device_set_attitude_cb(const mavros_msgs::msg::GimbalDeviceSetAttitude::SharedPtr req)
+      |                                                                                ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:406:51: error: ‘msg’ in namespace ‘mavros_msgs’ does not name a type
+  406 |   void manager_set_attitude_cb(const mavros_msgs::msg::GimbalManagerSetAttitude::SharedPtr req)
+      |                                                   ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:406:80: error: expected unqualified-id before ‘::’ token
+  406 |   void manager_set_attitude_cb(const mavros_msgs::msg::GimbalManagerSetAttitude::SharedPtr req)
+      |                                                                                ^~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:406:80: error: expected ‘)’ before ‘::’ token
+  406 |   void manager_set_attitude_cb(const mavros_msgs::msg::GimbalManagerSetAttitude::SharedPtr req)
+      |                               ~                                                ^~
+      |                                                                                )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:406:56: error: expected ‘;’ at end of member declaration
+  406 |   void manager_set_attitude_cb(const mavros_msgs::msg::GimbalManagerSetAttitude::SharedPtr req)
+      |                                                        ^~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                ;
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:406:82: error: ‘SharedPtr’ in namespace ‘::’ does not name a type
+  406 |   void manager_set_attitude_cb(const mavros_msgs::msg::GimbalManagerSetAttitude::SharedPtr req)
+      |                                                                                  ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:433:51: error: ‘msg’ in namespace ‘mavros_msgs’ does not name a type
+  433 |   void manager_set_pitchyaw_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                   ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:433:80: error: expected unqualified-id before ‘::’ token
+  433 |   void manager_set_pitchyaw_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                                                ^~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:433:80: error: expected ‘)’ before ‘::’ token
+  433 |   void manager_set_pitchyaw_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                               ~                                                ^~
+      |                                                                                )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:433:56: error: expected ‘;’ at end of member declaration
+  433 |   void manager_set_pitchyaw_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                        ^~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                ;
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:433:82: error: ‘SharedPtr’ in namespace ‘::’ does not name a type
+  433 |   void manager_set_pitchyaw_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                                                  ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:456:57: error: ‘msg’ in namespace ‘mavros_msgs’ does not name a type
+  456 |   void manager_set_manual_control_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                         ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:456:86: error: expected unqualified-id before ‘::’ token
+  456 |   void manager_set_manual_control_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                                                      ^~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:456:86: error: expected ‘)’ before ‘::’ token
+  456 |   void manager_set_manual_control_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                     ~                                                ^~
+      |                                                                                      )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:456:62: error: expected ‘;’ at end of member declaration
+  456 |   void manager_set_manual_control_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                              ^~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                      ;
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:456:88: error: ‘SharedPtr’ in namespace ‘::’ does not name a type
+  456 |   void manager_set_manual_control_cb(const mavros_msgs::msg::GimbalManagerSetPitchyaw::SharedPtr req)
+      |                                                                                        ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:480:24: error: ‘srv’ in namespace ‘mavros_msgs’ does not name a type
+  480 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                        ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:480:49: error: expected unqualified-id before ‘::’ token
+  480 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                                                 ^~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:480:49: error: expected ‘)’ before ‘::’ token
+  480 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                                                 ^~
+      |                                                 )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:479:26: note: to match this ‘(’
+  479 |   void device_get_info_cb(
+      |                          ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:480:29: error: expected ‘;’ at end of member declaration
+  480 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                             ^~~~~~~~~~~~~~~~~~~~
+      |                                                 ;
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:480:51: error: ‘Request’ in namespace ‘::’ does not name a type
+  480 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                                                   ^~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:499:33: error: ‘rclcpp’ has not been declared
+  499 |   void device_get_info_response(rclcpp::Client<mavros_msgs::srv::CommandLong>::SharedFuture response) {
+      |                                 ^~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:499:47: error: expected ‘,’ or ‘...’ before ‘<’ token
+  499 |   void device_get_info_response(rclcpp::Client<mavros_msgs::srv::CommandLong>::SharedFuture response) {
+      |                                               ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:511:24: error: ‘srv’ in namespace ‘mavros_msgs’ does not name a type
+  511 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                        ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:511:49: error: expected unqualified-id before ‘::’ token
+  511 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                                                 ^~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:511:49: error: expected ‘)’ before ‘::’ token
+  511 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                                                 ^~
+      |                                                 )
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:510:27: note: to match this ‘(’
+  510 |   void manager_get_info_cb(
+      |                           ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:511:29: error: expected ‘;’ at end of member declaration
+  511 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                             ^~~~~~~~~~~~~~~~~~~~
+      |                                                 ;
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:511:51: error: ‘Request’ in namespace ‘::’ does not name a type
+  511 |     const mavros_msgs::srv::GimbalGetInformation::Request::SharedPtr req [[maybe_unused]],
+      |                                                   ^~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:537:18: error: ‘mavros_msgs::srv’ has not been declared
+  537 |     mavros_msgs::srv::GimbalManagerConfigure::Request::SharedPtr req,
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:537:66: error: expected ‘,’ or ‘...’ before ‘req’
+  537 |     mavros_msgs::srv::GimbalManagerConfigure::Request::SharedPtr req,
+      |                                                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:568:18: error: ‘mavros_msgs::srv’ has not been declared
+  568 |     mavros_msgs::srv::GimbalManagerPitchyaw::Request::SharedPtr req,
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:568:65: error: expected ‘,’ or ‘...’ before ‘req’
+  568 |     mavros_msgs::srv::GimbalManagerPitchyaw::Request::SharedPtr req,
+      |                                                                 ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:604:18: error: ‘mavros_msgs::srv’ has not been declared
+  604 |     mavros_msgs::srv::GimbalManagerSetRoi::Request::SharedPtr req,
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:604:63: error: expected ‘,’ or ‘...’ before ‘req’
+  604 |     mavros_msgs::srv::GimbalManagerSetRoi::Request::SharedPtr req,
+      |                                                               ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:663:18: error: ‘mavros_msgs::srv’ has not been declared
+  663 |     mavros_msgs::srv::GimbalManagerCameraTrack::Request::SharedPtr req,
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:663:68: error: expected ‘,’ or ‘...’ before ‘req’
+  663 |     mavros_msgs::srv::GimbalManagerCameraTrack::Request::SharedPtr req,
+      |                                                                    ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::publish_tf(int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:232:22: error: ‘geometry_msgs::msg’ has not been declared
+  232 |       geometry_msgs::msg::TransformStamped transform;
+      |                      ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:233:7: error: ‘transform’ was not declared in this scope
+  233 |       transform.header.stamp = gimbal_attitude_msg.header.stamp;
+      |       ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:233:7: note: suggested alternatives:
+In file included from /usr/include/c++/9/algorithm:62,
+                 from /usr/include/boost/math/tools/config.hpp:18,
+                 from /usr/include/boost/math/special_functions/round.hpp:13,
+                 from /opt/ros/noetic/include/ros/time.h:58,
+                 from /opt/ros/noetic/include/tf2/transform_datatypes.h:36,
+                 from /opt/ros/noetic/include/tf2/convert.h:36,
+                 from /opt/ros/noetic/include/tf2_eigen/tf2_eigen.h:32,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:17:
+/usr/include/c++/9/bits/stl_algo.h:4369:5: note:   ‘std::transform’
+ 4369 |     transform(_InputIterator1 __first1, _InputIterator1 __last1,
+      |     ^~~~~~~~~
+In file included from /usr/include/boost/variant/variant.hpp:90,
+                 from /usr/include/boost/signals2/slot_base.hpp:22,
+                 from /usr/include/boost/signals2/detail/tracked_objects_visitor.hpp:18,
+                 from /usr/include/boost/signals2/slot.hpp:22,
+                 from /usr/include/boost/signals2/connection.hpp:24,
+                 from /usr/include/boost/signals2/signal.hpp:22,
+                 from /usr/include/boost/signals2.hpp:19,
+                 from /opt/ros/noetic/include/tf2/buffer_core.h:37,
+                 from /opt/ros/noetic/include/tf2_ros/buffer_interface.h:35,
+                 from /opt/ros/noetic/include/tf2_ros/buffer.h:35,
+                 from /opt/ros/noetic/include/tf2_ros/transform_listener.h:40,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros/include/mavros/mavros_uas.h:25,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:22:
+/usr/include/boost/mpl/transform.hpp:138:1: note:   ‘boost::mpl::transform’
+  138 | AUX778076_TRANSFORM_DEF(transform)
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:233:32: error: ‘gimbal_attitude_msg’ was not declared in this scope
+  233 |       transform.header.stamp = gimbal_attitude_msg.header.stamp;
+      |                                ^~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:238:7: error: ‘uas’ was not declared in this scope
+  238 |       uas->tf2_broadcaster.sendTransform(transform);
+      |       ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::handle_gimbal_attitude_status(const mavlink_message_t*, mavlink::common::msg::GIMBAL_DEVICE_ATTITUDE_STATUS&, int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:255:18: error: ‘mavros_msgs::msg’ has not been declared
+  255 |     mavros_msgs::msg::GimbalDeviceAttitudeStatus gimbal_attitude_msg;
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:256:5: error: ‘gimbal_attitude_msg’ was not declared in this scope
+  256 |     gimbal_attitude_msg.header = uas->synchronized_header(frame_id, mo.time_boot_ms);
+      |     ^~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:256:34: error: ‘uas’ was not declared in this scope
+  256 |     gimbal_attitude_msg.header = uas->synchronized_header(frame_id, mo.time_boot_ms);
+      |                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:260:20: error: ‘geometry_msgs::msg’ has not been declared
+  260 |     geometry_msgs::msg::Quaternion q;
+      |                    ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:261:5: error: ‘q’ was not declared in this scope
+  261 |     q.w = mo.q[0];
+      |     ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:271:5: error: ‘gimbal_attitude_status_pub’ was not declared in this scope
+  271 |     gimbal_attitude_status_pub->publish(gimbal_attitude_msg);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::handle_manager_status(const mavlink_message_t*, mavlink::common::msg::GIMBAL_MANAGER_STATUS&, int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:289:18: error: ‘mavros_msgs::msg’ has not been declared
+  289 |     mavros_msgs::msg::GimbalManagerStatus gimbal_manager_status_msg;
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:290:5: error: ‘gimbal_manager_status_msg’ was not declared in this scope
+  290 |     gimbal_manager_status_msg.header = uas->synchronized_header(frame_id, ms.time_boot_ms);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:290:40: error: ‘uas’ was not declared in this scope
+  290 |     gimbal_manager_status_msg.header = uas->synchronized_header(frame_id, ms.time_boot_ms);
+      |                                        ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:298:5: error: ‘gimbal_manager_status_pub’ was not declared in this scope
+  298 |     gimbal_manager_status_pub->publish(gimbal_manager_status_msg);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::handle_device_information(const mavlink_message_t*, mavlink::common::msg::GIMBAL_DEVICE_INFORMATION&, int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:327:18: error: ‘mavros_msgs::msg’ has not been declared
+  327 |     mavros_msgs::msg::GimbalDeviceInformation gimbal_device_information_msg;
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:328:5: error: ‘gimbal_device_information_msg’ was not declared in this scope; did you mean ‘handle_device_information’?
+  328 |     gimbal_device_information_msg.header = uas->synchronized_header(frame_id, di.time_boot_ms);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     handle_device_information
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:328:44: error: ‘uas’ was not declared in this scope
+  328 |     gimbal_device_information_msg.header = uas->synchronized_header(frame_id, di.time_boot_ms);
+      |                                            ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:344:5: error: ‘gimbal_device_info_pub’ was not declared in this scope
+  344 |     gimbal_device_info_pub->publish(gimbal_device_information_msg);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::handle_manager_information(const mavlink_message_t*, mavlink::common::msg::GIMBAL_MANAGER_INFORMATION&, int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:359:18: error: ‘mavros_msgs::msg’ has not been declared
+  359 |     mavros_msgs::msg::GimbalManagerInformation gimbal_manager_information_msg;
+      |                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:360:5: error: ‘gimbal_manager_information_msg’ was not declared in this scope; did you mean ‘handle_manager_information’?
+  360 |     gimbal_manager_information_msg.header = uas->synchronized_header(frame_id, mi.time_boot_ms);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     handle_manager_information
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:360:45: error: ‘uas’ was not declared in this scope
+  360 |     gimbal_manager_information_msg.header = uas->synchronized_header(frame_id, mi.time_boot_ms);
+      |                                             ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:370:5: error: ‘gimbal_manager_info_pub’ was not declared in this scope
+  370 |     gimbal_manager_info_pub->publish(gimbal_manager_information_msg);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::device_get_info_response(int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:500:19: error: ‘response’ was not declared in this scope
+  500 |     auto result = response.get();
+      |                   ^~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::manager_configure_cb(int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:543:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+  543 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:543:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:543:25: error: parse error in template argument list
+  543 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:543:77: error: no matching function for call to ‘make_shared<<expression error> >()’
+  543 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+In file included from /usr/include/c++/9/memory:81,
+                 from /opt/ros/noetic/include/geometry_msgs/TransformStamped.h:11,
+                 from /opt/ros/noetic/include/tf2/convert.h:38,
+                 from /opt/ros/noetic/include/tf2_eigen/tf2_eigen.h:32,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:17:
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note: candidate: ‘template<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)’
+  714 |     make_shared(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note:   template argument deduction/substitution failed:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:543:77: error: template argument 1 is invalid
+  543 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:545:23: error: ‘req’ was not declared in this scope
+  545 |       cmdrq->param1 = req->sysid_primary;
+      |                       ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:550:21: error: ‘cmdClient’ was not declared in this scope
+  550 |       auto future = cmdClient->async_send_request(cmdrq);
+      |                     ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:552:7: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  552 |       res->success = response->success;
+      |       ^~~
+      |       ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:555:20: error: ‘get_logger’ was not declared in this scope
+  555 |       RCLCPP_ERROR(get_logger(), "GimbalControl: %s", ex.what());
+      |                    ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:555:7: error: ‘RCLCPP_ERROR’ was not declared in this scope
+  555 |       RCLCPP_ERROR(get_logger(), "GimbalControl: %s", ex.what());
+      |       ^~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:558:7: error: ‘get_logger’ was not declared in this scope
+  558 |       get_logger(), !res->success, "GimbalControl: plugin service call failed!");
+      |       ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:558:22: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  558 |       get_logger(), !res->success, "GimbalControl: plugin service call failed!");
+      |                      ^~~
+      |                      ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:557:5: error: ‘RCLCPP_ERROR_EXPRESSION’ was not declared in this scope
+  557 |     RCLCPP_ERROR_EXPRESSION(
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::manager_pitchyaw_cb(int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:574:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+  574 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:574:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:574:25: error: parse error in template argument list
+  574 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:574:77: error: no matching function for call to ‘make_shared<<expression error> >()’
+  574 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+In file included from /usr/include/c++/9/memory:81,
+                 from /opt/ros/noetic/include/geometry_msgs/TransformStamped.h:11,
+                 from /opt/ros/noetic/include/tf2/convert.h:38,
+                 from /opt/ros/noetic/include/tf2_eigen/tf2_eigen.h:32,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:17:
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note: candidate: ‘template<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)’
+  714 |     make_shared(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note:   template argument deduction/substitution failed:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:574:77: error: template argument 1 is invalid
+  574 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:576:23: error: ‘req’ was not declared in this scope
+  576 |       cmdrq->param1 = req->pitch;
+      |                       ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:582:21: error: ‘cmdClient’ was not declared in this scope
+  582 |       auto future = cmdClient->async_send_request(cmdrq);
+      |                     ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:584:7: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  584 |       res->success = response->success;
+      |       ^~~
+      |       ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:587:20: error: ‘get_logger’ was not declared in this scope
+  587 |       RCLCPP_ERROR(get_logger(), "GimbalControl: %s", ex.what());
+      |                    ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:587:7: error: ‘RCLCPP_ERROR’ was not declared in this scope
+  587 |       RCLCPP_ERROR(get_logger(), "GimbalControl: %s", ex.what());
+      |       ^~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:590:7: error: ‘get_logger’ was not declared in this scope
+  590 |       get_logger(), !res->success, "GimbalControl: plugin service call failed!");
+      |       ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:590:22: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  590 |       get_logger(), !res->success, "GimbalControl: plugin service call failed!");
+      |                      ^~~
+      |                      ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:589:5: error: ‘RCLCPP_ERROR_EXPRESSION’ was not declared in this scope
+  589 |     RCLCPP_ERROR_EXPRESSION(
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::manager_set_roi_cb(int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:610:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+  610 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:610:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:610:25: error: parse error in template argument list
+  610 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:610:77: error: no matching function for call to ‘make_shared<<expression error> >()’
+  610 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+In file included from /usr/include/c++/9/memory:81,
+                 from /opt/ros/noetic/include/geometry_msgs/TransformStamped.h:11,
+                 from /opt/ros/noetic/include/tf2/convert.h:38,
+                 from /opt/ros/noetic/include/tf2_eigen/tf2_eigen.h:32,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:17:
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note: candidate: ‘template<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)’
+  714 |     make_shared(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note:   template argument deduction/substitution failed:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:610:77: error: template argument 1 is invalid
+  610 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:611:11: error: ‘req’ was not declared in this scope
+  611 |       if (req->mode == req->ROI_MODE_LOCATION) {
+      |           ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:635:9: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  635 |         res->success = false;
+      |         ^~~
+      |         ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:641:21: error: ‘cmdClient’ was not declared in this scope
+  641 |       auto future = cmdClient->async_send_request(cmdrq);
+      |                     ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:643:7: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  643 |       res->success = response->success;
+      |       ^~~
+      |       ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:646:20: error: ‘get_logger’ was not declared in this scope
+  646 |       RCLCPP_ERROR(get_logger(), "GimbalManagerSetRoi: %s", ex.what());
+      |                    ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:646:7: error: ‘RCLCPP_ERROR’ was not declared in this scope
+  646 |       RCLCPP_ERROR(get_logger(), "GimbalManagerSetRoi: %s", ex.what());
+      |       ^~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:650:7: error: ‘get_logger’ was not declared in this scope
+  650 |       get_logger(), !res->success, "GimbalManager - set roi: plugin service call failed!");
+      |       ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:650:22: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  650 |       get_logger(), !res->success, "GimbalManager - set roi: plugin service call failed!");
+      |                      ^~~
+      |                      ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:649:5: error: ‘RCLCPP_ERROR_EXPRESSION’ was not declared in this scope
+  649 |     RCLCPP_ERROR_EXPRESSION(
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp: In member function ‘void mavros::extra_plugins::GimbalControlPlugin::manager_camera_track(int)’:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:669:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+  669 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                  ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:669:50: error: ‘srv’ is not a member of ‘mavros_msgs’
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:669:25: error: parse error in template argument list
+  669 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:669:77: error: no matching function for call to ‘make_shared<<expression error> >()’
+  669 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+In file included from /usr/include/c++/9/memory:81,
+                 from /opt/ros/noetic/include/geometry_msgs/TransformStamped.h:11,
+                 from /opt/ros/noetic/include/tf2/convert.h:38,
+                 from /opt/ros/noetic/include/tf2_eigen/tf2_eigen.h:32,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:17:
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note: candidate: ‘template<class _Tp, class ... _Args> std::shared_ptr<_Tp> std::make_shared(_Args&& ...)’
+  714 |     make_shared(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/9/bits/shared_ptr.h:714:5: note:   template argument deduction/substitution failed:
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:669:77: error: template argument 1 is invalid
+  669 |       auto cmdrq = std::make_shared<mavros_msgs::srv::CommandLong::Request>();
+      |                                                                             ^
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:670:11: error: ‘req’ was not declared in this scope
+  670 |       if (req->mode == req->CAMERA_TRACK_MODE_POINT) {
+      |           ^~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:687:9: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  687 |         res->success = false;
+      |         ^~~
+      |         ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:692:21: error: ‘cmdClient’ was not declared in this scope
+  692 |       auto future = cmdClient->async_send_request(cmdrq);
+      |                     ^~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:694:7: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  694 |       res->success = response->success;
+      |       ^~~
+      |       ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:697:20: error: ‘get_logger’ was not declared in this scope
+  697 |       RCLCPP_ERROR(get_logger(), "GimbalManagerCameraTrack: %s", ex.what());
+      |                    ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:697:7: error: ‘RCLCPP_ERROR’ was not declared in this scope
+  697 |       RCLCPP_ERROR(get_logger(), "GimbalManagerCameraTrack: %s", ex.what());
+      |       ^~~~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:701:7: error: ‘get_logger’ was not declared in this scope
+  701 |       get_logger(), !res->success, "GimbalManager - camera track: plugin service call failed!");
+      |       ^~~~~~~~~~
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:701:22: error: ‘res’ was not declared in this scope; did you mean ‘ros’?
+  701 |       get_logger(), !res->success, "GimbalManager - camera track: plugin service call failed!");
+      |                      ^~~
+      |                      ros
+/home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:700:5: error: ‘RCLCPP_ERROR_EXPRESSION’ was not declared in this scope
+  700 |     RCLCPP_ERROR_EXPRESSION(
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+In file included from /opt/ros/noetic/include/class_loader/class_loader_core.hpp:45,
+                 from /opt/ros/noetic/include/class_loader/class_loader.hpp:46,
+                 from /opt/ros/noetic/include/pluginlib/class_list_macros.hpp:40,
+                 from /home/calvinwen/catkin_ws/src/mavros/mavros_extras/src/plugins/gimbal_control.cpp:707:
+/opt/ros/noetic/include/class_loader/meta_object.hpp: In instantiation of ‘B* class_loader::impl::MetaObject<C, B>::create() const [with C = mavros::extra_plugins::GimbalControlPlugin; B = mavros::plugin::PluginBase]’:
+/opt/ros/noetic/include/class_loader/meta_object.hpp:196:7:   required from here
+/opt/ros/noetic/include/class_loader/meta_object.hpp:198:16: error: cannot convert ‘mavros::extra_plugins::GimbalControlPlugin*’ to ‘mavros::plugin::PluginBase*’ in return
+  198 |     return new C;
+      |                ^
+make[2]: *** [CMakeFiles/mavros_extras.dir/build.make:206: CMakeFiles/mavros_extras.dir/src/plugins/gimbal_control.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:735: CMakeFiles/mavros_extras.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

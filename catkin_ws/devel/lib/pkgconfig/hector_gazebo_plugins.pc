@@ -1,0 +1,1 @@
+/home/calvinwen/catkin_ws/devel/.private/hector_gazebo_plugins/lib/pkgconfig/hector_gazebo_plugins.pc
