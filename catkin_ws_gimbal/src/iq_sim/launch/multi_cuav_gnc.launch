@@ -1,0 +1,13 @@
+<launch>
+	<group>
+		<node pkg="iq_sim" type="offb_node_iq_gnc.py" name="target_gnc" output="screen" args="--ns target/">
+		</node>
+	</group>
+
+	<!-- <group>
+		<node pkg="iq_gnc" type="square" name="square2" output="screen" ns="/interceptor">
+			<param name="namespace" value="/interceptor"/>
+			<param name="use_sim_time"  value="true" />
+		</node>
+	</group> -->
+</launch>

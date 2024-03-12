@@ -1,0 +1,47 @@
+<launch>
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find ardupilot_gazebo)/worlds/multi_iris_with_roscam_runway.world"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+
+  <!-- <param name="robot_description" textfile="$(find ardupilot_gazebo)/models/interceptorv2/model.urdf" />
+  <node name="test_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param robot_description -model test" />
+
+  <rosparam file="$(find ardupilot_gazebo)/models/ros_gimbal_small_2d/config.yaml" command="load"/>
+  <node name="controller_spawner" pkg ="controller_manager" type="spawner" ns="/ros_gimbal_2D" args="tilt_joint_position_controller joint_state_controller"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+        <remap from="joint_state" to="/ros_gimbal_2D/joint_states" />
+  </node> -->
+
+
+
+  <!-- <group ns="target">
+    <include file="$(find gazebo_ros)/launch/spawn_sdf.launch">
+      <arg name="robot_name" value="target" />
+      <arg name="x" value="0.0" />
+      <arg name="y" value="0.0" />
+      <arg name="z" value="0.0" />
+      <arg name="roll" value="0"/>
+      <arg name="pitch" value="0"/>
+      <arg name="yaw" value="0.0" />
+      <arg name="sdf_robot_file" value="$(find ardupilot_gazebo)/models/target/model.sdf" />
+    </include>
+  </group>
+
+  <group ns="interceptor">
+  <include file="$(find gazebo_ros)/launch/spawn_sdf.launch">
+    <arg name="robot_name" value="interceptor" />
+    <arg name="x" value="0.0" />
+    <arg name="y" value="-5" />
+    <arg name="z" value="0.0" />
+    <arg name="roll" value="0"/>
+    <arg name="pitch" value="0"/>
+    <arg name="yaw" value="1.57" />
+    <arg name="sdf_robot_file" value="$(find ardupilot_gazebo)/models/interceptor/model.sdf" />
+  </include>
+</group> -->
+  <!-- <node name="rviz" pkg="rviz" type="rviz"/> -->
+</launch>

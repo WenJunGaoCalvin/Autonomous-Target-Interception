@@ -1,0 +1,6 @@
+devel_space: /home/calvinwen/ardupilot_gazebo_roscam/devel
+install: false
+install_space: /home/calvinwen/ardupilot_gazebo_roscam/install
+profile: default
+source_space: /home/calvinwen/ardupilot_gazebo_roscam/src
+workspace: /home/calvinwen/ardupilot_gazebo_roscam

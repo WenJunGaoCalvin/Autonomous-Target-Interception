@@ -1,0 +1,8 @@
+prefix=/home/calvinwen/ardupilot_gazebo_roscam/install
+
+Name: ardupilot_gazebo
+Description: Description of ardupilot_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

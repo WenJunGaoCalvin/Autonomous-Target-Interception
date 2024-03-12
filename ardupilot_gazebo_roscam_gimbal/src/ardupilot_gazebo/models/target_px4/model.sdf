@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<sdf version="1.6">
+  <model name="target_px4">
+    <include>
+      <uri>model://iris_px4</uri>
+    </include>
+  </model>
+</sdf>

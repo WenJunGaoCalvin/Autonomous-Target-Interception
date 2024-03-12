@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/calvinwen/ardupilot_gazebo_roscam/devel/.private/ardupilot_gazebo/setup.sh
