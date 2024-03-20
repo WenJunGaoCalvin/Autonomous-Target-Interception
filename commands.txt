@@ -1,0 +1,70 @@
+# bash files
+# edit bashrc
+sudo vi ~/.bashrc
+insert: i
+save :wq
+
+
+# run iris_runway world
+gz sim -v4 -r iris_runway.sdf
+
+# initialise 2 SITL drones - need to go into ArduCopter folder to run these commands
+sim_vehicle.py -v ArduCopter -f gazebo-drone1 --console -I0 --out=tcpin:0.0.0.0:8100 --model JSON
+sim_vehicle.py -v ArduCopter -f gazebo-drone2 --console -I1 --out=tcpin:0.0.0.0:8200 --model JSON
+
+./multi-ardupilot.sh
+
+#launch MAVROS 
+roslaunch multi-apm.launch
+# launching multiple instances of the same node https://www.clearpathrobotics.com/assets/guides/noetic/ros/Launch%20Files.html
+https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/multi_mavros_drones.md
+
+
+#launch dashboard to check ROS topics
+rqt
+
+
+------
+# Target drone command using python via position setpoint
+gz sim -v4 -r iris_runway.sdf
+sim_vehicle.py -v ArduCopter -f gazebo-drone1 --console -I0 --out=tcpin:0.0.0.0:8100 --model JSON
+via MAVProxy: mode guided, arm throttle, takeoff 10
+roslaunch mavros apm.launch fcu_url:=tcp://0.0.0.0:8100 tgt_system:=1
+cd ~/calvin/fyp/offboard_py/src
+./offb_node.py
+
+### New 
+# Launch ROS integrated Gazebo
+roslaunch ardupilot_gazebo iris_with_roscam.launch
+# Launch SITL ardupilot
+sim_vehicle.py -v ArduCopter -f gazebo-drone1 --console --map --out=tcpin:0.0.0.0:8100
+sim_vehicle.py -v ArduCopter -f gazebo-drone2 --console -I1 --out=tcpin:0.0.0.0:8200 --model JSON
+via MAVProxy: mode guided, arm throttle, takeoff 10
+roslaunch mavros apm.launch fcu_url:=tcp://0.0.0.0:8100 tgt_system:=1
+cd ~/calvin/fyp/offboard_py/src
+./offb_node.py
+
+### New V2
+roslaunch ardupilot_gazebo multi_iris_with_roscam.launch
+
+sim_vehicle.py -v ArduCopter -f gazebo-drone1 --console -I0 --out=tcpin:0.0.0.0:8100
+sim_vehicle.py -v ArduCopter -f gazebo-drone2 --console -I1 --out=tcpin:0.0.0.0:8200 -M
+
+# ./multi_ardupilot.sh
+roslaunch iq_sim multi_apm.launch
+roslaunch iq_sim multi_cuav_gnc.launch
+roslaunch iq_sim cuav_interceptor_gnc.launch
+roslaunch iq_sim cuav_interceptor_gnc_gimbal.launch
+
+
+## Dectection
+source python_YOLO5/bin/activate
+cd /home/calvinwen/calvin/fyp/detection/depth_estimation_yolo8
+cd ~/calvin/fyp/detection/Depth-estimation-using-Depth-Camera-D435i-for-YOLOv5-detected-objects
+usr/bin/python3 realDetect.py
+
+# Gimbal 
+roslaunch ardupilot_gazebo multi_iris_with_roscam_gimbal.launch
+gz topic -p "/gazebo/default/interceptor/gimbal_roll_cmd" -m "data:'0'"
+
+rostopic pub /ros_yaw_rate std_msgs/Float64 "321"
