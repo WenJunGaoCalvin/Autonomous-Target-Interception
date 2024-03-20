@@ -26,7 +26,7 @@ import argparse
 import time, os, sys
 from pathlib import Path
 
-from std_msgs.msg import String, Float64
+from std_msgs.msg import String, Float64, Bool, Int32
 from nav_msgs.msg import Odometry
 from actionlib_msgs.msg import *
 from geometry_msgs.msg import Pose, Point, Quaternion
@@ -47,6 +47,9 @@ from utils.torch_utils import select_device, reshape_classifier_output, time_syn
 
 from simple_pid import PID
 import math
+import rosbag
+import time
+import csv
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -156,15 +159,15 @@ def callback(image_msg,interceptorObj):
     cv_image = bridge.imgmsg_to_cv2(image_msg, desired_encoding="bgr8")
     interceptorObj.update_colour_img(cv_image)
 
-def kinect_detect(opt,model,names,colors,device, interceptorObj):
+def kinect_detect(opt,model,names,colors,device, interceptorObj,video):
     try:
-        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj)
+        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj,video)
     except:
         print("image input error")
     else:
-        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj)
+        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj,video)
 
-def yolo_pred(color_image,depth,model,names,colors,device,opt,interceptorObj):
+def yolo_pred(color_image,depth,model,names,colors,device,opt,interceptorObj,video):
     if type(depth)==int:
         return
 
@@ -220,7 +223,10 @@ def yolo_pred(color_image,depth,model,names,colors,device,opt,interceptorObj):
 
     interceptorObj.updatebbox(im0)
     interceptorObj.update_xyz(d1,d2,zDepth)
-    cv2.imshow("Stream", im0)
+    # print("Size")
+    # print(im0.shape)
+    video.write(im0)
+    # cv2.imshow("Stream", im0)
     cv2.waitKey(1)
 
 def yolo_init(device):
@@ -297,27 +303,31 @@ def ibvs_getYaw(yaw,yawPID):
     yaw_rate = yawPID(yaw)
     return yaw_rate
 
-def neutralise_yaw(drone,quadYawPID):
+def neutralise_yaw(drone,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub):
     # publish a vel_msg to yaw exactly by how much gimbal yaw is
     rospy.loginfo("Neutralising gimbal")
+    gimbal_neut_flag.data = 1
+    gimbal_neut_status_pub.publish(gimbal_neut_flag)
+
     vel_msg = PositionTarget()
     vel_msg.type_mask = 0b010111000111
     vel_msg.coordinate_frame = 8
-    
-    while abs(drone.current_gimbal_yaw)>0.06: # around 3-5 deg from neutral
+    inner_threshold = 0.06
+    while abs(drone.current_gimbal_yaw)>inner_threshold: # around 3-5 deg from neutral
         # gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
         threshold = 0.349066 # 20 deg
+        yaw_rate_lim = 0.5
         if drone.current_gimbal_yaw > threshold:
-            gimbal_yaw_rate = -3.14
-        elif 0 < drone.current_gimbal_yaw < threshold:
-            gimbal_yaw_rate = -1
-        elif 0 > drone.current_gimbal_yaw > -1*threshold:
-            gimbal_yaw_rate = 1
+            gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
+        elif inner_threshold < drone.current_gimbal_yaw < threshold:
+            gimbal_yaw_rate = -1*yaw_rate_lim
+        elif -1*inner_threshold > drone.current_gimbal_yaw > -1*threshold:
+            gimbal_yaw_rate = yaw_rate_lim
         elif drone.current_gimbal_yaw < -1*threshold:
-            gimbal_yaw_rate = 3.14
+            gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
         else:
             gimbal_yaw_rate = 0
-        quad_yaw_rate = -gimbal_yaw_rate
+        quad_yaw_rate = -1*gimbal_yaw_rate
         # quadcopter action to neutralise gimbal
         vel_msg.yaw_rate = quad_yaw_rate
         drone.local_vel_pub.publish(vel_msg)
@@ -329,6 +339,9 @@ def neutralise_yaw(drone,quadYawPID):
     gimbal_yaw_rate = 0   
     drone.gimbal_yaw_rate_pub.publish(gimbal_yaw_rate)
     drone.local_vel_pub.publish(vel_msg)
+    rospy.loginfo("Gimbal neutralised")
+    gimbal_neut_flag.data = 0
+    gimbal_neut_status_pub.publish(gimbal_neut_flag)
 
 def euler_from_quaternion(x, y, z, w):
         """
@@ -364,7 +377,6 @@ def control_pitch(drone):
     # rospy.loginfo(pitch)
     drone.gimbal_pitch_pub.publish(pitch_cmd)
     
-   
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--ns', type=str, default="/")
@@ -392,6 +404,7 @@ if __name__ == "__main__":
 
     # Initialise
     rospy.init_node("interceptor_gnc")
+    # bag = rosbag.Bag('path_taken.bag','w')
 
     # Specify control loop rate. Setpoint publishing MUST be faster than 2Hz
     rate = rospy.Rate(60)
@@ -402,20 +415,46 @@ if __name__ == "__main__":
 
     rospy.Subscriber('interceptor/camera_ir/camera/depth/image_raw',Image,get_kinect_distance_img, interceptorObj, queue_size = 1)
     rospy.Subscriber("interceptor/camera_ir/camera/color/image_raw", Image, callback, interceptorObj, queue_size = 1, buff_size = 16777216)
+    
+    yolo_detect_x_pub = rospy.Publisher(
+            name="/yolo_detect_coord_x",
+            data_class=Int32,
+            queue_size = 10
+        )
+    yolo_detect_y_pub = rospy.Publisher(
+            name="/yolo_detect_coord_y",
+            data_class=Int32,
+            queue_size = 10
+        )
+    yolo_detect_z_pub = rospy.Publisher(
+            name="/yolo_detect_coord_z",
+            data_class=Float64,
+            queue_size = 10
+        )
+    gimbal_neut_status_pub = rospy.Publisher(
+            name="/gimbal_neutralisation_status",
+            data_class=Bool,
+            queue_size = 10)
+    log_flag_pub = rospy.Publisher( # to be controlled externally
+            name="/log_data_flag",
+            data_class=Bool,
+            queue_size = 10)
+
+    # other initialisations of ros data structures
+    gimbal_neut_flag = Bool()
+    ros_yolo_x = Int32()
+    ros_yolo_y = Int32()
+    ros_yolo_depth = Float64()
 
     xPID, yPID, quadYawPID, gimbalYawPID = ibvs_init()
 
     # Video Capture code
-    frame_width = 480
-    frame_height = 640
+    frame_width = 640
+    frame_height = 480
    
     size = (frame_width, frame_height)
 
-    # topics for ROS - Gazebo topic data flows
-    yaw_sub_topic = "/ros_gimbal_yaw_status"
-    yaw_rate_pub_topic = "/ros_yaw_rate"
-
-    result = cv2.VideoWriter('filename.avi',  
+    video = cv2.VideoWriter('/home/calvinwen/catkin_ws/src/iq_sim/scripts/filename.avi',  
                          cv2.VideoWriter_fourcc(*'MJPG'), 
                          10, size) 
     
@@ -425,6 +464,8 @@ if __name__ == "__main__":
     interceptor_gnc.wait4connect()
     # Wait for the mode to be switched.
     interceptor_gnc.wait4start()
+
+    
 
     # setting velocity in body frame
     vel_msg = PositionTarget()
@@ -450,7 +491,10 @@ if __name__ == "__main__":
 
     last_req = rospy.Time.now()
 
+    first_loop = 1
+
     while not rospy.is_shutdown():
+        tic = time.perf_counter()
         if(current_state.mode != "GUIDED" and (rospy.Time.now() - last_req) > rospy.Duration(5.0)):
             if(interceptor_gnc.set_mode_client.call(offb_set_mode).mode_sent == True):
                 rospy.loginfo("GUIDED enabled")
@@ -464,11 +508,20 @@ if __name__ == "__main__":
                 last_req = rospy.Time.now()
 
         with torch.no_grad():
-            kinect_detect(opt,model,names,colors,device,interceptorObj)
+            kinect_detect(opt,model,names,colors,device,interceptorObj,video)
             im0 = interceptorObj.colour_img
             x = interceptorObj.x
             y = interceptorObj.y
             z = interceptorObj.z
+
+            ros_yolo_x.data = x
+            ros_yolo_y.data = y
+            ros_yolo_depth.data = z
+
+            yolo_detect_x_pub.publish(ros_yolo_x)
+            yolo_detect_y_pub.publish(ros_yolo_y)
+            yolo_detect_z_pub.publish(ros_yolo_depth)
+
             if type(im0) == int:
                 continue
             yaw = interceptor_gnc.current_gimbal_yaw
@@ -476,33 +529,45 @@ if __name__ == "__main__":
             control_pitch(interceptor_gnc)
             if abs(yaw)>0.087:
                 # stop chase & neutralise gimbal joint yaw between -10 to 10 deg
-                neutralise_yaw(interceptor_gnc, quadYawPID)
-
-            if x > 0:
-                # if a coord is available, update yaw and vertical velocity
-                vx, vy, gimbal_yaw_rate = ibvs_getVel(x,y,z, xPID, yPID, gimbalYawPID)
-                # yaw_rate = ibvs_getYaw(yaw,quadYawPID)
-                interceptor_gnc.gimbal_yaw_rate_pub.publish(gimbal_yaw_rate)
-                vel_msg.velocity.z = vy
-                vel_msg.yaw_rate = 0
-
-                # forward creep
-                vel_msg.velocity.x = 0.5
-                if z > 0:
-                    # if a depth reading is available, update forward velocity
-                    vel_msg.velocity.x = vx
+                neutralise_yaw(interceptor_gnc, quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub)
             else:
-                # if no detection, spin to find target
-                neutralise_yaw(interceptor_gnc,quadYawPID)
-                vel_msg.velocity.x = 0
-                vel_msg.velocity.z = 0
-                vel_msg.yaw_rate = 0.1
-            
-            # Test Code
-            # vel_msg.velocity.x = 10       
-            
-            interceptor_gnc.local_vel_pub.publish(vel_msg)
-            print("x,y,z,gimbal_yaw")
-            print(x,y,z,yaw)
-        rate.sleep()
 
+                if x > 0:
+                    # if a coord is available, update yaw and vertical velocity
+                    vx, vy, gimbal_yaw_rate = ibvs_getVel(x,y,z, xPID, yPID, gimbalYawPID)
+                    # yaw_rate = ibvs_getYaw(yaw,quadYawPID)
+                    interceptor_gnc.gimbal_yaw_rate_pub.publish(gimbal_yaw_rate)
+                    vel_msg.velocity.z = vy
+                    vel_msg.yaw_rate = 0
+
+                    # forward creep
+                    vel_msg.velocity.x = 2
+                    if z > 0:
+                        # if a depth reading is available, update forward velocity
+                        vel_msg.velocity.x = vx
+                else:
+                    # if no detection, spin to find target
+                    neutralise_yaw(interceptor_gnc,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub)
+                    vel_msg.velocity.x = 0
+                    vel_msg.velocity.z = 0
+                    vel_msg.yaw_rate = 0.1
+                
+                # Test Code
+                # vel_msg.velocity.x = 10       
+                
+                interceptor_gnc.local_vel_pub.publish(vel_msg)
+                print("x,y,z,gimbal_yaw")
+                print(x,y,z,yaw)
+        toc = time.perf_counter()
+        loop_time = toc - tic
+        if first_loop:
+            first_loop = 0
+            with open('/home/calvinwen/catkin_ws/src/iq_sim/scripts/computation_time_gimbal.csv','w') as f:
+                writer = csv.writer(f)
+                writer.writerow([loop_time])
+        else:
+            with open('/home/calvinwen/catkin_ws/src/iq_sim/scripts/computation_time_gimbal.csv','a') as f:
+                writer = csv.writer(f)
+                writer.writerow([loop_time])
+        rate.sleep()
+    video.release()

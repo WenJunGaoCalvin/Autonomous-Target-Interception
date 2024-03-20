@@ -66,7 +66,7 @@ if __name__ == "__main__":
     i = 0
     period = 10
     osc_freq = 1/period
-    amp = 3
+    amp = 1
 
 
     # # Send a few setpoints before starting
@@ -86,11 +86,6 @@ if __name__ == "__main__":
     arm_cmd.value = True
 
     last_req = rospy.Time.now()
-
-    test_vel_msg = PositionTarget()
-    test_vel_msg.type_mask = 0b010111000111
-    test_vel_msg.coordinate_frame = 8
-    test_vel_msg.yaw = 3.14
 
     while(not rospy.is_shutdown()):
         if(current_state.mode != "GUIDED" and (rospy.Time.now() - last_req) > rospy.Duration(5.0)):
@@ -138,7 +133,7 @@ if __name__ == "__main__":
         # chooose flight profile
 
         # target.local_vel_pub.publish(osc_vel_msg)
-        target.local_vel_pub.publish(test_vel_msg)
+        target.local_vel_pub.publish(osc_vel_msg)
 
         rate.sleep()
 
