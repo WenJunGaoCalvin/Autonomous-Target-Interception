@@ -18,3 +18,13 @@ Simulated drone: Iris SITL
 ### Current Works
 Implementing gimbal control to enable more robust target locking.
 
+### Commands
+roslaunch ardupilot_gazebo multi_iris_with_roscam.launch<br /> 
+
+sim_vehicle.py -v ArduCopter -f gazebo-drone1 --console -I0 --out=tcpin:0.0.0.0:8100<br /> 
+sim_vehicle.py -v ArduCopter -f gazebo-drone2 --console -I1 --out=tcpin:0.0.0.0:8200 -M<br /> 
+
+roslaunch iq_sim multi_apm.launch<br /> 
+roslaunch iq_sim multi_cuav_gnc.launch<br /> 
+roslaunch iq_sim cuav_interceptor_gnc.launch<br /> 
+roslaunch iq_sim cuav_interceptor_gnc_gimbal.launch
