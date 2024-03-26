@@ -50,6 +50,10 @@ import math
 import rosbag
 import time
 import csv
+import os, os.path
+
+file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/gimbal/videos/'
+time_file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/gimbal/time/'
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -136,12 +140,13 @@ def get_depth(depth_img, d1,d2):
     a = 10
     z_arr = []
     height = len(depth_img)
-    width = len(depth_img[0])
+    width= len(depth_img[0])
     for i in range(d1-2*a,d1):
         for j in range(d2-a,d2+a):
-            if (0<=i<height) and (0<=j<width) and not np.isnan(depth_img[j][i]):
-                zDepth = depth_img[j][i]
-                z_arr.append(zDepth)
+            if (0<=i<height) and (0<=j<width): 
+                if not np.isnan(depth_img[j][i]):
+                    zDepth = depth_img[j][i]
+                    z_arr.append(zDepth)
     if not z_arr:
         return -0.01
     zDepth = np.mean(z_arr)
@@ -268,17 +273,17 @@ class Interceptor ():
 
 def ibvs_init():
     Ts = 0.1
-    Kx = np.array([1,0, 0.000])/5
-    Ky = np.array([1.2,0.0306, 0.0001])/480
-    Kyaw = np.array([1.2,0.2,0])
+    Kx = np.array([0.4,0.002, 0]) #Kmax = 1, f0 = 1/21
+    Ky = np.array([1,0, 0.0001])/480
+    Kyaw = np.array([1,0.2,0.1])
     # Kx = np.array([0,0, 0.000])
     # Ky = np.array([0,0.0, 0.0])
     # Kyaw = np.array([0,0.0, 0.0])
-    KgimbalYaw = np.array([0.001,0.0,0])
+    KgimbalYaw = np.array([0.002,0.0,0])
     
-    setpoints = [320,240,3,0] #image is 640 by 480
+    setpoints = [320,240,5,0] #image is 640 by 480
     xPID = PID(Kx[0],Kx[1],Kx[2],setpoints[2]) # forward PID
-    xPID.output_limits = (-10,10)
+    xPID.output_limits = (-5,5)
     xPID.sample_time = Ts
     yPID = PID(Ky[0],Ky[1],Ky[2],setpoints[1]) # up PID
     yPID.output_limits = (-10,10)
@@ -303,7 +308,7 @@ def ibvs_getYaw(yaw,yawPID):
     yaw_rate = yawPID(yaw)
     return yaw_rate
 
-def neutralise_yaw(drone,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub):
+def neutralise_yaw(drone,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub,vx,vy,kinect_params):
     # publish a vel_msg to yaw exactly by how much gimbal yaw is
     rospy.loginfo("Neutralising gimbal")
     gimbal_neut_flag.data = 1
@@ -313,19 +318,35 @@ def neutralise_yaw(drone,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub):
     vel_msg.type_mask = 0b010111000111
     vel_msg.coordinate_frame = 8
     inner_threshold = 0.06
+
+    opt,model,names,colors,device,interceptorObj,video = kinect_params
+
+    threshold = 0.349066 # 20 deg
+    yaw_rate_lower = 0.3
+    yaw_rate_upper = 1
+
     while abs(drone.current_gimbal_yaw)>inner_threshold: # around 3-5 deg from neutral
+        # kinect_detect(opt,model,names,colors,device,interceptorObj,video)
+        x = interceptorObj.x
+        if x >= 0:
+            vel_msg.velocity.z = 0
+            vel_msg.velocity.x = vx
+        elif x<0 and abs(vx) > 0.07:
+            vel_msg.velocity.z = 0
+            vel_msg.velocity.x = 0
+
         # gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
-        threshold = 0.349066 # 20 deg
-        yaw_rate_lim = 0.5
+
         if drone.current_gimbal_yaw > threshold:
-            gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
+            # gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
+            gimbal_yaw_rate = -1*yaw_rate_upper
         elif inner_threshold < drone.current_gimbal_yaw < threshold:
-            gimbal_yaw_rate = -1*yaw_rate_lim
+            gimbal_yaw_rate = -1*yaw_rate_lower
         elif -1*inner_threshold > drone.current_gimbal_yaw > -1*threshold:
-            gimbal_yaw_rate = yaw_rate_lim
+            gimbal_yaw_rate = yaw_rate_lower
         elif drone.current_gimbal_yaw < -1*threshold:
-            gimbal_yaw_rate = quadYawPID(drone.current_gimbal_yaw)
-        else:
+            gimbal_yaw_rate = yaw_rate_upper
+        elif abs(drone.current_gimbal_yaw)>inner_threshold:
             gimbal_yaw_rate = 0
         quad_yaw_rate = -1*gimbal_yaw_rate
         # quadcopter action to neutralise gimbal
@@ -333,7 +354,7 @@ def neutralise_yaw(drone,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub):
         drone.local_vel_pub.publish(vel_msg)
         # neutralise gimbal using negaitive of yaw rate
         drone.gimbal_yaw_rate_pub.publish(gimbal_yaw_rate)
-
+    
     # stop yawing when within range
     vel_msg.yaw_rate = 0
     gimbal_yaw_rate = 0   
@@ -454,9 +475,12 @@ if __name__ == "__main__":
    
     size = (frame_width, frame_height)
 
-    video = cv2.VideoWriter('/home/calvinwen/catkin_ws/src/iq_sim/scripts/filename.avi',  
+    num = len([name for name in os.listdir(file_dir) if os.path.isfile(file_dir + name)])
+    timenum = len([name for name in os.listdir(time_file_dir) if os.path.isfile(time_file_dir + name)])
+
+    video = cv2.VideoWriter(file_dir + str(num) +'_filename.avi',  
                          cv2.VideoWriter_fourcc(*'MJPG'), 
-                         10, size) 
+                         1, size) 
     
     # Create interceptor as an object for the API.
     interceptor_gnc = gnc_api(ns)
@@ -492,6 +516,10 @@ if __name__ == "__main__":
     last_req = rospy.Time.now()
 
     first_loop = 1
+    last_known_vx = 0
+    last_known_vy = 0
+
+    kinect_params = [opt,model,names,colors,device,interceptorObj,video]
 
     while not rospy.is_shutdown():
         tic = time.perf_counter()
@@ -527,9 +555,10 @@ if __name__ == "__main__":
             yaw = interceptor_gnc.current_gimbal_yaw
             
             control_pitch(interceptor_gnc)
-            if abs(yaw)>0.087:
+            # if abs(yaw)>0.087:
+            if abs(yaw)>0.06:
                 # stop chase & neutralise gimbal joint yaw between -10 to 10 deg
-                neutralise_yaw(interceptor_gnc, quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub)
+                neutralise_yaw(interceptor_gnc, quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub,last_known_vx,last_known_vy,kinect_params)
             else:
 
                 if x > 0:
@@ -538,19 +567,25 @@ if __name__ == "__main__":
                     # yaw_rate = ibvs_getYaw(yaw,quadYawPID)
                     interceptor_gnc.gimbal_yaw_rate_pub.publish(gimbal_yaw_rate)
                     vel_msg.velocity.z = vy
+                    last_known_vy = vy
                     vel_msg.yaw_rate = 0
 
-                    # forward creep
-                    vel_msg.velocity.x = 2
                     if z > 0:
                         # if a depth reading is available, update forward velocity
                         vel_msg.velocity.x = vx
+                        last_known_vx = vx
+                    elif z < 0 and last_known_vx:
+                        vel_msg.velocity.x = last_known_vx
+                    else:
+                        # forward creep   
+                        vel_msg.velocity.x = 1
+
                 else:
                     # if no detection, spin to find target
-                    neutralise_yaw(interceptor_gnc,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub)
+                    # neutralise_yaw(interceptor_gnc,quadYawPID,gimbal_neut_flag,gimbal_neut_status_pub,0,0,kinect_params)
                     vel_msg.velocity.x = 0
                     vel_msg.velocity.z = 0
-                    vel_msg.yaw_rate = 0.1
+                    vel_msg.yaw_rate = 0.2
                 
                 # Test Code
                 # vel_msg.velocity.x = 10       
@@ -560,14 +595,16 @@ if __name__ == "__main__":
                 print(x,y,z,yaw)
         toc = time.perf_counter()
         loop_time = toc - tic
+        print("Loop Time: {}".format(loop_time))
+        
         if first_loop:
             first_loop = 0
-            with open('/home/calvinwen/catkin_ws/src/iq_sim/scripts/computation_time_gimbal.csv','w') as f:
+            with open(time_file_dir + str(timenum) +'_computation_time.csv','w') as f:
                 writer = csv.writer(f)
-                writer.writerow([loop_time])
+                writer.writerow([loop_time,vel_msg.velocity.x])
         else:
-            with open('/home/calvinwen/catkin_ws/src/iq_sim/scripts/computation_time_gimbal.csv','a') as f:
+            with open(time_file_dir + str(timenum) + '_computation_time.csv','a') as f:
                 writer = csv.writer(f)
-                writer.writerow([loop_time])
+                writer.writerow([loop_time,vel_msg.velocity.x])
         rate.sleep()
     video.release()

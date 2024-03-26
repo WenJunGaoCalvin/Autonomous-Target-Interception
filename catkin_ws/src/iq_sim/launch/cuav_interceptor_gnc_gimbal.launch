@@ -3,11 +3,8 @@
 		<node pkg="iq_sim" type="ibvs_iq_gnc_gimbal.py" name="interceptor_gnc" output="screen" args="--ns interceptor/">
 		</node>
 	</group>
-
-	<!-- <group>
-		<node pkg="iq_gnc" type="square" name="square2" output="screen" ns="/interceptor">
-			<param name="namespace" value="/interceptor"/>
-			<param name="use_sim_time"  value="true" />
+	<group>
+		<node pkg="iq_sim" type="pitch_controller.py" name="pitch_controller" output="screen" >
 		</node>
-	</group> -->
+	</group>
 </launch>

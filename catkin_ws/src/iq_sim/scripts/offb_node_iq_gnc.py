@@ -15,6 +15,7 @@ from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeReq
 from iq_gnc.py_gnc_functions import *
 import argparse
 import math
+import time
 
 current_state = State()
 
@@ -48,16 +49,18 @@ if __name__ == "__main__":
 
     # setting velocity in body frame
     circle_vel_msg = PositionTarget()
-    speed = 0 #1
-    radius = 5
-    omega = speed/radius
+    speed = 1 #1
+    radius = 10
+    circle_omega = speed/radius
+    circle_period = 2*math.pi/circle_omega
+    circle_freq = 1/circle_period
     circle_vel_msg.type_mask = 0b010111000111
     circle_vel_msg.coordinate_frame = 8
-    circle_vel_msg.velocity.x = 0 #5
+    circle_vel_msg.velocity.x = 1 #5
     circle_vel_msg.velocity.y = 0
     #vel_msg.velocity.z = 0
     #vel_msg.yaw = 0
-    circle_vel_msg.yaw_rate = omega
+    circle_vel_msg.yaw_rate = circle_omega
 
     osc_vel_msg = PositionTarget()
     osc_vel_msg.type_mask = 0b010111000111
@@ -68,6 +71,19 @@ if __name__ == "__main__":
     osc_freq = 1/period
     amp = 1
 
+    random_vel_msg = PositionTarget()
+    random_vel_msg.type_mask = 0b010111000111
+    random_vel_msg.coordinate_frame = 8
+    random_vel_msg.velocity.x = 1
+    phase1 = 1 # circle 1
+    phase2 = 0 # circle 2
+    phase3 = 0 # back osc
+    t = 0
+    tic = time.perf_counter()
+
+    OSC_FLAG = 0
+    CIRCLE_FLAG = 0
+    RANDOM_FLAG = 1
 
     # # Send a few setpoints before starting
     # for i in range(100):
@@ -129,11 +145,45 @@ if __name__ == "__main__":
         y_rate = omega*amp*math.cos(omega*i)
         osc_vel_msg.velocity.y = y_rate
         i+= 1/loop_freq
+        if RANDOM_FLAG:
+            if phase1:
+                if t < (circle_period):
+                    random_vel_msg.yaw_rate = circle_omega
+                    toc = time.perf_counter()
+                    t = toc - tic
+                    target.local_vel_pub.publish(random_vel_msg)
+                else:
+                    phase1 = 0
+                    phase2 = 1
+                    t = 0
+                    rospy.loginfo("Phase 1 completed")
+                    tic = time.perf_counter()
+            if phase2:
+                if t < (circle_period)*0.5:
+                    random_vel_msg.yaw_rate = 0
+                    toc = time.perf_counter()
+                    t = toc - tic
+                    target.local_vel_pub.publish(random_vel_msg)
+                else:
+                    phase2 = 0
+                    phase3 = 1
+                    t = 0
+                    rospy.loginfo("Phase 2 completed")
+                    tic = time.perf_counter()
+            if phase3:
+                if t < (circle_period)*0.5:
+                    random_vel_msg.yaw_rate = circle_omega
+                    toc = time.perf_counter()
+                    t = toc - tic
+                    target.local_vel_pub.publish(random_vel_msg)
+                else:
+                    random_vel_msg = osc_vel_msg
+                    target.local_vel_pub.publish(random_vel_msg)
 
         # chooose flight profile
-
-        # target.local_vel_pub.publish(osc_vel_msg)
-        target.local_vel_pub.publish(osc_vel_msg)
+        if OSC_FLAG:
+            target.local_vel_pub.publish(osc_vel_msg)
+        if CIRCLE_FLAG:
+            target.local_vel_pub.publish(circle_vel_msg)
 
         rate.sleep()
-

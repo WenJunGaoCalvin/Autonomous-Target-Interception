@@ -9,7 +9,7 @@
 
 import rospy
 import torch
-import os, sys
+import os, sys, os.path
 from pathlib import Path
 from utils.general import check_requirements
 # import move_circle_server
@@ -39,6 +39,7 @@ import torch.backends.cudnn as cudnn
 from numpy import random
 import pyrealsense2 as rs
 from ultralytics import YOLO
+from std_msgs.msg import String, Float64, Bool, Int32
 
 
 from utils.dataloaders import LoadStreams, LoadImages
@@ -48,6 +49,10 @@ from utils.plots import save_one_box, plot_images
 from utils.torch_utils import select_device, reshape_classifier_output, time_sync
 
 from simple_pid import PID
+
+file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/no_gimbal/videos/'
+time_file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/no_gimbal/time/'
+
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -157,15 +162,15 @@ def callback(image_msg,interceptorObj):
     cv_image = bridge.imgmsg_to_cv2(image_msg, desired_encoding="bgr8")
     interceptorObj.update_colour_img(cv_image)
 
-def kinect_detect(opt,model,names,colors,device, interceptorObj):
+def kinect_detect(opt,model,names,colors,device, interceptorObj,video):
     try:
-        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj)
+        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj,video)
     except:
         print("image input error")
     else:
-        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj)
+        yolo_pred(interceptorObj.colour_img,interceptorObj.depth_image, model,names,colors,device,opt,interceptorObj,video)
 
-def yolo_pred(color_image,depth,model,names,colors,device,opt,interceptorObj):
+def yolo_pred(color_image,depth,model,names,colors,device,opt,interceptorObj,video):
     if type(depth)==int:
         return
 
@@ -221,7 +226,8 @@ def yolo_pred(color_image,depth,model,names,colors,device,opt,interceptorObj):
 
     interceptorObj.updatebbox(im0)
     interceptorObj.update_xyz(d1,d2,zDepth)
-    cv2.imshow("Stream", im0)
+    video.write(im0)
+    # cv2.imshow("Stream", im0)
     cv2.waitKey(1)
 
 def yolo_init(device):
@@ -263,12 +269,14 @@ class Interceptor ():
 
 def ibvs_init():
     Ts = 0.1
-    Kx = np.array([1,0, 0.000])/5
-    Ky = np.array([1.2,0.0306, 0.0001])/480
+    Kx = np.array([0.39,0.002, 0])
+    Ky = np.array([1,0, 0.0001])/480
+    Kyaw = np.array([0.0015,0.0,0])
     # Kx = np.array([0,0,0])
     # Ky = np.array([0,0,0])
-    Kyaw = np.array([1.2,0.0,0])/1000
-    setpoints = [320,240,3]
+    # Kyaw = np.array([0,0,0])
+    
+    setpoints = [320,240,5]
     xPID = PID(Kx[0],Kx[1],Kx[2],setpoints[2])
     xPID.output_limits = (-10,10)
     xPID.sample_time = Ts
@@ -327,17 +335,48 @@ if __name__ == "__main__":
     rospy.Subscriber('interceptor/camera_ir/camera/depth/image_raw',Image,get_kinect_distance_img, interceptorObj, queue_size = 1)
     rospy.Subscriber("interceptor/camera_ir/camera/color/image_raw", Image, callback, interceptorObj, queue_size = 1, buff_size = 16777216)
     
+    yolo_detect_x_pub = rospy.Publisher(
+            name="/yolo_detect_coord_x",
+            data_class=Int32,
+            queue_size = 10
+        )
+    yolo_detect_y_pub = rospy.Publisher(
+            name="/yolo_detect_coord_y",
+            data_class=Int32,
+            queue_size = 10
+        )
+    yolo_detect_z_pub = rospy.Publisher(
+            name="/yolo_detect_coord_z",
+            data_class=Float64,
+            queue_size = 10
+        )
+    
+    log_flag_pub = rospy.Publisher( # to be controlled externally
+            name="/log_data_flag",
+            data_class=Bool,
+            queue_size = 10
+            )
+    
+    # other initialisations of ros data structures
+    gimbal_neut_flag = Bool()
+    ros_yolo_x = Int32()
+    ros_yolo_y = Int32()
+    ros_yolo_depth = Float64()
+
     xPID, yPID, yawPID = ibvs_init()
 
     # Video Capture code
-    frame_width = 480
-    frame_height = 640
+    frame_width = 640
+    frame_height = 480
    
     size = (frame_width, frame_height)
 
-    result = cv2.VideoWriter('filename.avi',  
+    num = len([name for name in os.listdir(file_dir) if os.path.isfile(file_dir + name)])
+    timenum = len([name for name in os.listdir(time_file_dir) if os.path.isfile(time_file_dir + name)])
+
+    video = cv2.VideoWriter(file_dir + str(num) +'_filename.avi',  
                          cv2.VideoWriter_fourcc(*'MJPG'), 
-                         10, size) 
+                         1, size) 
     
     # Create interceptor as an object for the API.
     interceptor_gnc = gnc_api(ns)
@@ -351,15 +390,6 @@ if __name__ == "__main__":
     vel_msg.type_mask = 0b010111000111
     vel_msg.coordinate_frame = 8
     vel_msg.velocity.x, vel_msg.velocity.z, vel_msg.yaw_rate = 0,0,0
-
-    # Gimbal orientation message
-    gimbal_msg = MountControl()
-
-    gimbal_msg.pitch = 0
-    gimbal_msg.roll = 0
-    gimbal_msg.yaw = 0
-    gimbal_msg.mode = 2
-    
 
     # # Send a few setpoints before starting
     # for i in range(100):
@@ -379,7 +409,14 @@ if __name__ == "__main__":
 
     last_req = rospy.Time.now()
 
+    first_loop = 1
+    last_known_vx = 0
+    last_known_vy = 0
+
+    kinect_params = [opt,model,names,colors,device,interceptorObj,video]
+
     while not rospy.is_shutdown():
+        tic = time.perf_counter()
         if(current_state.mode != "GUIDED" and (rospy.Time.now() - last_req) > rospy.Duration(5.0)):
             if(interceptor_gnc.set_mode_client.call(offb_set_mode).mode_sent == True):
                 rospy.loginfo("GUIDED enabled")
@@ -390,34 +427,62 @@ if __name__ == "__main__":
                 if(interceptor_gnc.arming_client.call(arm_cmd).success == True):
                     rospy.loginfo("Vehicle armed")
 
-
                 last_req = rospy.Time.now()  
 
         with torch.no_grad():
-            kinect_detect(opt,model,names,colors,device,interceptorObj)
+            kinect_detect(opt,model,names,colors,device,interceptorObj,video)
             im0 = interceptorObj.colour_img
             x = interceptorObj.x
             y = interceptorObj.y
             z = interceptorObj.z
+
+            ros_yolo_x.data = x
+            ros_yolo_y.data = y
+            ros_yolo_depth.data = z
+
+            yolo_detect_x_pub.publish(ros_yolo_x)
+            yolo_detect_y_pub.publish(ros_yolo_y)
+            yolo_detect_z_pub.publish(ros_yolo_depth)
+
             if type(im0) == int:
                 continue
             if x > 0:
                 # if a coord is available, update yaw and vertical velocity
                 vx, vy, yaw_rate = ibvs_getVel(x,y,z, xPID, yPID, yawPID)
                 vel_msg.velocity.z = vy
+                last_known_vy = vy
                 vel_msg.yaw_rate = yaw_rate
-                # forward creep
-                vel_msg.velocity.x = 0.5
+
                 if z > 0:
                     # if a depth reading is available, update forward velocity
                     vel_msg.velocity.x = vx
+                    last_known_vx = vx
+                elif z < 0 and last_known_vx:
+                    vel_msg.velocity.x = last_known_vx
+                else:
+                    # forward creep   
+                    vel_msg.velocity.x = 1
             else:
                 # if no detection, spin to find target
                 vel_msg.velocity.x = 0
                 vel_msg.velocity.z = 0
-                vel_msg.yaw_rate = 0.1
-            interceptor_gnc.local_vel_pub.publish(vel_msg)
-            # interceptor_gnc.mount_control_pub.publish(gimbal_msg)
-            print(type(im0),x,y,z)
-        rate.sleep()
+                vel_msg.yaw_rate = 0.2
 
+            interceptor_gnc.local_vel_pub.publish(vel_msg)
+            print("x,y,z")
+            print(x,y,z)
+        toc = time.perf_counter()
+        loop_time = toc - tic
+        print("Loop Time: {}".format(loop_time))
+        
+        if first_loop:
+            first_loop = 0
+            with open(time_file_dir + str(timenum) +'_computation_time.csv','w') as f:
+                writer = csv.writer(f)
+                writer.writerow([loop_time,vel_msg.velocity.x])
+        else:
+            with open(time_file_dir + str(timenum) + '_computation_time.csv','a') as f:
+                writer = csv.writer(f)
+                writer.writerow([loop_time,vel_msg.velocity.x])
+        rate.sleep()
+    video.release()

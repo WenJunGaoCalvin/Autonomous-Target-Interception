@@ -57,20 +57,6 @@ class logger_api:
             callback=self.interceptor_vel_cb,
         )
 
-        self.gimbalPitch = rospy.Subscriber(
-            name="/ros_gimbal_pitch_status",
-            data_class=String,
-            queue_size=10,
-            callback=self.gimbal_pitch_cb,
-        )
-
-        self.gimbalYaw = rospy.Subscriber(
-            name="/ros_gimbal_yaw_status",
-            data_class=String,
-            queue_size=10,
-            callback=self.gimbal_yaw_cb,
-        )
-
         self.targetYoloX = rospy.Subscriber(
             name="/yolo_detect_coord_x",
             data_class=Int32,
@@ -90,13 +76,6 @@ class logger_api:
             data_class=Float64,
             queue_size=10,
             callback=self.target_yolo_z_cb,
-        )
-
-        self.gimbalNeut = rospy.Subscriber(
-            name="/gimbal_neutralisation_status",
-            data_class=Bool,
-            queue_size=10,
-            callback=self.gimbal_neut_cb,
         )
 
         self.dataLog = rospy.Subscriber(
@@ -152,12 +131,6 @@ class logger_api:
     
     def interceptor_vel_cb(self, message):
         self.interceptor_vel = message
-    
-    def gimbal_pitch_cb(self, message):
-        self.current_gimbal_pitch.data = float(message.data)
-    
-    def gimbal_yaw_cb(self, message):
-        self.current_gimbal_yaw.data = float(message.data)
                                             
     def target_yolo_x_cb(self, message):
         self.target_img_coord_x = message
@@ -168,9 +141,6 @@ class logger_api:
     def target_yolo_z_cb(self, message):
         self.target_img_coord_depth = message
     
-    def gimbal_neut_cb(self, message):
-        self.gimbal_neut_flag = message
-    
     def data_log_cb(self, message):
         self.record_flag = message
 
@@ -178,7 +148,7 @@ rospy.init_node("datalogger")
 rate = rospy.Rate(60)
 
 log_inactive = 1
-file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/gimbal/rosbags/'
+file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/no_gimbal/rosbags/'
 num = len([name for name in os.listdir(file_dir) if os.path.isfile(file_dir + name)])
 bag = rosbag.Bag(file_dir + str(num) +'_datalog.bag', 'w')
 # create 1 bag for unified timer object
@@ -192,12 +162,9 @@ while not rospy.is_shutdown():
         bag.write('interceptor_pos',datalogger.interceptor_pose_g)
         bag.write('target_vel',datalogger.target_vel)
         bag.write('interceptor_vel',datalogger.interceptor_vel)
-        bag.write('interceptor_gimbal_yaw_rate',datalogger.current_gimbal_pitch)
-        bag.write('interceptor_gimbal_yaw',datalogger.current_gimbal_yaw)
         bag.write('target_img_coord_x',datalogger.target_img_coord_x)
         bag.write('target_img_coord_y',datalogger.target_img_coord_y)
         bag.write('target_img_coord_depth',datalogger.target_img_coord_depth)
-        bag.write('gimbal_neut',datalogger.gimbal_neut_flag)
         bag.write('interceptor_pitch',datalogger.interceptor_pitch)
         bag.write('interceptor_yaw',datalogger.interceptor_yaw)
     elif not datalogger.record_flag.data and not log_inactive:

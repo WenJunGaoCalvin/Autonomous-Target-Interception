@@ -24,7 +24,7 @@
 	</node>
 
 	<group>
-		<node pkg="iq_sim" type="datalogger.py" name="datalogger" output="screen">
+		<node pkg="iq_sim" type="datalogger_no_gimbal.py" name="datalogger" output="screen">
 		</node>
 	</group>
 	

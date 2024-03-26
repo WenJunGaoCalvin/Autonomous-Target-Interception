@@ -15,14 +15,11 @@ def process_entry(entry,start_time):
     int_pos = entry[3]
     target_vel = entry[4]
     inter_vel = entry[5]
-    inter_gimbal_yaw_rate = entry[6]
-    inter_gimbal_yaw = entry[7]
-    x = entry[8]
-    y = entry[9]
-    depth = entry[10]
-    gimbal_neut_flag = entry[11]
-    inter_pitch = entry[12]
-    inter_yaw = entry[13]
+    x = entry[6]
+    y = entry[7]
+    depth = entry[8]
+    inter_pitch = entry[9]
+    inter_yaw = entry[10]
 
     # process ROS data
     ts = tsec - start_time
@@ -42,25 +39,22 @@ def process_entry(entry,start_time):
     inter_vy = inter_vel.twist.linear.y
     inter_vz = inter_vel.twist.linear.z
     inter_v = math.sqrt(inter_vx**2+inter_vy**2+inter_vz**2)
-    inter_g_yaw_rate = inter_gimbal_yaw_rate.data
-    inter_g_yaw = inter_gimbal_yaw.data
     yolo_x = x.data
     yolo_y = y.data
     yolo_depth = depth.data
-    gimbal_neut = int(gimbal_neut_flag.data)
     inter_pitch2 = inter_pitch.data
     inter_yaw2 = inter_yaw.data
     
     processed = [t,target_x,target_y,target_z,inter_x,inter_y,inter_z,target_v,
-                 inter_vx,inter_vy,inter_vz,inter_v,inter_g_yaw_rate,
-                 inter_g_yaw,yolo_x,yolo_y,yolo_depth,gimbal_neut,inter_pitch2,inter_yaw2]
+                 inter_vx,inter_vy,inter_vz,inter_v,
+                 yolo_x,yolo_y,yolo_depth,inter_pitch2,inter_yaw2]
     
     
     # print(processed)
     return processed
 
-file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/gimbal/'
-filename = '26_datalog.bag' # to change
+file_dir = '/home/calvinwen/catkin_ws/src/iq_sim/scripts/logs/no_gimbal/'
+filename = '19_datalog.bag' # to change
 bag = rosbag.Bag(file_dir + "rosbags/" + filename)
 num = len([name for name in os.listdir(file_dir + "csv") if os.path.isfile(file_dir + "csv/" + name)])
 with open(file_dir + "csv/" + str(num) + "_datalog.csv", mode='w') as data_file:
@@ -75,8 +69,8 @@ with open(file_dir + "csv/" + str(num) + "_datalog.csv", mode='w') as data_file:
     #     if i == num_topics:
     #         break
     csv_headers = ['t','target_x','target_y','target_z','inter_x','inter_y','inter_z','target_v',
-                'inter_vx','inter_vy','inter_vz','inter_v','inter_g_yaw_rate',
-                'inter_g_yaw','yolo_x','yolo_y','yolo_depth','gimbal_neut','inter_pitch','inter_yaw']
+                'inter_vx','inter_vy','inter_vz','inter_v',
+                'yolo_x','yolo_y','yolo_depth','inter_pitch','inter_yaw']
     data_writer.writerow(csv_headers)
     j = 0
     first_entry = 1

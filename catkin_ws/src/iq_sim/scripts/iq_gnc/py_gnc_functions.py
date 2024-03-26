@@ -2,7 +2,7 @@
 from iq_gnc.PrintColours import *
 import rospy
 from math import atan2, pow, sqrt, degrees, radians, sin, cos
-from geometry_msgs.msg import Pose, PoseStamped, Point, Quaternion
+from geometry_msgs.msg import Pose, PoseStamped, Point, Quaternion, TwistStamped
 from nav_msgs.msg import Odometry
 from mavros_msgs.msg import State, PositionTarget
 from mavros_msgs.srv import CommandTOL, CommandTOLRequest
@@ -26,6 +26,7 @@ class gnc_api:
         self.local_offset_pose_g = Point()
         self.waypoint_g = PoseStamped()
         self.current_gimbal_yaw = float()
+        self.current_velocity = TwistStamped()
 
         self.current_heading_g = 0.0
         self.local_offset_g = 0.0
@@ -83,6 +84,13 @@ class gnc_api:
             callback=self.state_cb,
         )
 
+        self.vel_sub = rospy.Subscriber(
+            name="{}mavros/local_position/velocity_body".format(self.ns),
+            data_class=State,
+            queue_size=10,
+            callback=self.vel_cb,
+        )
+
         rospy.wait_for_service("{}mavros/cmd/arming".format(self.ns))
 
         self.arming_client = rospy.ServiceProxy(
@@ -116,6 +124,9 @@ class gnc_api:
 
     def state_cb(self, message):
         self.current_state_g = message
+    
+    def vel_cb(self, message):
+        self.current_velocity = message
 
     def gimbal_cb(self,message):
         self.current_gimbal_yaw = float(message.data)
